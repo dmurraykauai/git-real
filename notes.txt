@@ -1,0 +1,15 @@
+// status
+git log
+
+git add [files]
+
+git add --all
+
+git add *.txt
+
+git add docs/*.txt
+
+git add "*.txt" // will add ALL text files in entire project
+
+// changed here.
+
