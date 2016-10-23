@@ -13,3 +13,19 @@ git add "*.txt" // will add ALL text files in entire project
 
 // changed here.
 
+git reset --soft HEAD^
+
+git commit --amend -m "new msg"
+
+git reset --hard HEAD^ // blows away entire previous commit 
+
+git reset --hard HEAD^^ // undo last 2 commits and all changes 
+
+
+git remote add origin https://github.com/dmurraykauai/git-real.git
+// stages remote push
+
+git remote -v // shows what's in the queue to publish
+
+git push -u origin master // to actually push to the github remote 
+
