@@ -27,5 +27,31 @@ git remote add origin https://github.com/dmurraykauai/git-real.git
 
 git remote -v // shows what's in the queue to publish
 
-git push -u origin master // to actually push to the github remote 
+git push -u origin master 
+// to actually push to the github remote 
+
+// if get "Updates were rejected because the tip of your current branch is ..."
+// use -f (force) switch
+git push -f origin master 
+
+// pull from github
+git remote add <name> <address>
+
+git remote rm <name> // remove remotes
+
+git push -u <name> <branch> // push remotes
+// -u switch is to set the name/branch once
+// use just `git push` afterwards.
+
+
+// Heroku remote
+heroku create
+
+git remote -v
+
+git push heroku master //deploys code to heroku
+
+
+
+
 
