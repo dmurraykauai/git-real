@@ -1,0 +1,8 @@
+/*************************************/
+//level 1
+
+Interactive Rebase
+
+// alter commits in the same branch:
+git rebase -i HEAD~3 // interactive rebase going back 3 levels 
+
