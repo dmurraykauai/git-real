@@ -21,6 +21,7 @@ git reset --hard HEAD^ // blows away entire previous commit
 
 git reset --hard HEAD^^ // undo last 2 commits and all changes 
 
+git checkout 
 
 git remote add origin https://github.com/dmurraykauai/git-real.git
 // stages remote push
@@ -50,6 +51,26 @@ heroku create
 git remote -v
 
 git push heroku master //deploys code to heroku
+
+
+
+/********************************/
+// branching
+
+git branch <branchName>
+
+git checkout <branchName>
+
+git branch
+
+// move back to master branch
+git checkout master
+
+git merge <branchName>
+// merges new branch w/ master branch. 
+
+// now delete the <branchName> branch
+git branch -d <branchName>
 
 
 
