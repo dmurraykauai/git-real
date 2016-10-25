@@ -111,3 +111,131 @@ fb9b2a3 edited commit message!
 113f042 amend commit...
 f08d3f5 add license and readme mod
 cfd4b15 Initial commit
+
+
+// Squash commits (several back to 1)
+git rebase -i HEAD~4
+
+
+/**************************************************************/
+// Level 2: Stashing 
+
+Scenario: You're in the middle of committing a branch with a new web page. 
+Boss calls and wants a master branch deployed immediately. Since you're in the 
+middle of a new branch.... what to do? Stashing.
+
+git stash save // saves files away from last commit 
+
+git checkout master 
+git pull 
+// make revisions and push after
+
+Now, ready to pick up where we left off with our new branch:
+git checkout <newBranch>
+
+git stash apply // restores changes to branch
+
+git stash list //lists all stashes
+stash@1
+stash@2
+stash@3
+
+git stash apply stash@1
+
+// afterwards the stash doesn't pop/delete itself, so run:
+git stash drop 
+
+git stash     = git stash save
+git stash apply = git stash apply stash@{0}
+git stash drop  = git stash drop stash@{0}
+git stash pop   = git stash apply and git stash drop (at the same time)
+
+// Keep Index
+git stash save --keep-index 
+
+git status 
+git commit -m "adding single new file, not everything"
+
+git stash pop 
+
+
+// Stash including untracked files along w/ tracked ones
+git stash save --include-untracked 
+git status
+git stash pop 
+
+// stash list options
+git stash list 
+git stash list --stat 
+
+//stash show
+git stash show stash@{0}
+
+git stash show --patch //shows file diffs 
+
+// leave message on the stash
+git stash save "Add eew page"
+git stash list // shows new message left above 
+
+// accidentally deleted the branch where your stash is pointing to?
+git stash branch <branchName> stash@{0} // creates branch and copies stash contents into the branch 
+
+git commit -am "commit stash replinished branch"
+
+// blow away the entire list of stashes?
+git stash clear 
+
+
+/*********************************************************/
+
+// Level 3: purging history
+
+step one: back up entire repo
+
+git clone mySite mySite-Backup
+
+// to rewrite history use:
+git filter-branch --tree-filter <shell command> // specify a shell command as last options
+
+git will check each commit out into a working directory, run your <command>, and recommit the code. 
+
+ie: 
+git filter-branch --tree-filter 'rm -f passwords.txt'
+
+or remove large mp4 files:
+
+git filter-branch --tree-filter 'find . -name "*.mp4" -exec rm {} \;'
+
+// run so goes through all branches
+git filter-branch --tree-filter 'rm -f passwords.txt' -- --all
+
+// run on only current branch 
+git filter-branch --tree-filter 'rm -f passwords.txt' -- --HEAD 
+
+** the `-f` switch is to make sure the filter command doesn't fail if the passwords.txt file isn't found 
+
+** This whole process takes much time, so a quicker way to do this is via the 
+// Index Filter 
+// Only works on the staging area
+git filter-branch --index-filter 'git rm --cached --ignore-unmatch passwords.txt'
+
+** --ignore-unmatch is to ensure the command doesn't fail if the file doesn't exist 
+
+// If you run again it would fail because git keeps a backup. Use the -f switch 
+Run: git filter-branch -f --tree-filter 'rm -f passwords.txt' -- --all 
+
+//Prune empty commits after
+git filter-branch -f --prune-empty -- --all 
+
+
+
+
+
+
+
+
+
+
+
+
+
