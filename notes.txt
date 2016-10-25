@@ -73,6 +73,168 @@ git merge <branchName>
 git branch -d <branchName>
 
 
+//*******************************//
+// Now create a new admin branch and checkout at same time:
+
+git checkout -b admin
+
+
+// Level 5 : branching
+
+git branch -r (gets remote branches also)
+
+git checkout shopping_cart 
+
+git remote show origin
+
+//delete remote branch (Not local)
+git push origin :admin 
+
+//delete local branch
+git branch -d admin // only deletes if there's no outstanding commits to be made
+git branch -D admin // will over ride the above situation and delete anyway.
+
+// if you go to push to a remote branch and the branch doesn't exist anymore, run:
+git remote prune origin 
+
+// to push to heroku and your origin is not `master`, use this syntax if your branch is named `staging`
+git push heroku-staging staging:master
+// heroku only takes the master branch, so push local staging branch to heroku master location. 
+
+Tagging: a way to tag a commit w/ an alias to find it easier later on. (release versioning)
+git tag
+git checkout <tagName>
+
+// add a tag name 
+git tag -a v0..0.3 -m "version 0.0.3"
+
+git push --tags // to push the branch thats tagged. 
+
+
+/*******************************************************/
+//level 6 : Rebase
+
+git pull and git push 
+are replaced by
+git fetch and git rebase 
+
+// To merge `admin` branch with `master`:
+git checkout admin 
+git rebase master 
+git checkout master 
+git merge admin 
+
+// dealing w/ conflicts
+git fetch
+git rebase 
+//conflict arises 
+git rebase --continue
+
+// if prefer to skip this patch, run:
+git rebase --skip
+
+// to check out original branch and stop rebasing, run:
+git rebase --abort 
+
+
+
+
+
+/************************************/
+// level 7: history and configuration
+
+// git log command configurations
+
+git config --global color.ui true // turns on color coding globally
+
+git log --pretty=oneline // pretty on one line!
+
+git log --pretty=format: "%h %ad- %s  [%an]"
+
+git log --oneline -p //shows what lines were added and which removed. 
+
+git log --oneline --stat //shows how many insertions and deletes were made for each file in each commit 
+
+git log --oneline --graph //shows visual representation of the merge lines and bubbles 
+
+// git log date ranges
+git log --until=1.minute.ago
+git log --since=1.day.ago
+git log --since=1.hour.ago 
+git log --since=1.month.ago --until=2.weeks.ago //between range 
+git log --since=2000-01-01 --until=2016-10-10 // between years range 
+
+git diff //see what changed since last commit 
+
+git diff HEAD //same as `git diff`
+
+git diff HEAD^ //parent of latest commit 
+git diff HEAD^^ //grandparent of latest commit 
+git diff HEAD~5 //five commits ago
+git diff HEAD^ ..HEAD //second most recent commit vs. most recent
+
+git diff <sha Value 1> <sha value 2>
+// git log --oneline will give abbreviated shas. You can use the addreviations in a range comparison
+
+git diff master bird //show diff between 2 branches 
+
+// time based diff
+git diff --since=1.week.ago --until=1.minute.ago 
+
+// who screwed up??
+git blame index.html --date short 
+
+// Excluding files / folders
+to exclude the `experiments` directory, add entry to the .ignore file 
+
+.git/info/exclude 
+
+*.mp4
+experiments/
+
+
+// git .gitignore file 
+logs/*.log 
+
+//remove file from git
+git rm readme.txt 
+git commit -m "remove readme"
+
+//untracking files
+git rm --cached development.log
+//** won't be deleted from file system, only from git repo 
+
+
+// More global configuration details available
+git config --global core.editor.emacs 
+git config --global merge.tool opendiff
+
+git config user.email "spam@example.com" // sets email addy for project. Overrides global email addy setting
+
+git config user.email // shows email addy used for current repository
+
+// Aliases for log formats
+git config --global alias.mylog \
+"log --pretty=format: '%h %s [%an]' --graph"
+
+git config --global alias.lol \
+"log --graph --decorate --pretty=oneline --abbrev-commit --all"
+
+git mylog
+git lol 
+
+
+// aliasis for commonly used commands
+
+git config --global alias.st status 
+git config --global alias.co checkout 
+git config --global alias.br branch 
+git config --global alias.ci commit 
+
+git st //git status returned 
+
+
+
 
 
 
