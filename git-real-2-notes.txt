@@ -228,6 +228,66 @@ Run: git filter-branch -f --tree-filter 'rm -f passwords.txt' -- --all
 git filter-branch -f --prune-empty -- --all 
 
 
+/***************************************************************************/
+Level 4: Working together
+
+Line endings between linux / windows / mac
+\r\n 
+
+git config --global core.autocrlf true 
+
+//linux 
+git config --global core.autocrlf input 
+
+
+.gitattributes file 
+//create this file in your project root 
+
+file types        |       conversion settings
+---------------------------------------------
+*                     text=auto
+*.html                text 
+*.css                 text 
+*.bat                 text eol=crlf
+*.sh                  text eol = lf
+*.jpg                 binary 
+
+
+// Cherry Picking 
+To take a commit from a second branch and `pick` it out and add to production/master branch. 
+
+git log --oneline gives the shortened id for the commit
+
+git checkout production 
+
+git cherry-pick 5321e3 
+
+git log --oneline (on prod branch)
+//will see the cherry picked commit added to production 
+
+// to edit the commit message...
+git cherry-pick --edit 5321
+
+// cherry pick multiple commits from dev into prod 
+git cherry-pick --no-commit 5321e2 8584a9 
+
+//then commit as normal once in prod branch 
+git commit -m "added 2 new commits from dev to prod"
+
+// to add sourch SHA to commit message when cherry picking 
+git cherry-pick -x 5321a3 // -x option 
+
+// this is only useful for public branches. Local branch id's can't be seen anyway.
+
+// To keep track of who did the cherry picking, use:
+git cherry-pick --signoff 5321a8 // --signoff option 
+
+git log // now it will show the cherry picker in the author/email data for the commit  
+
+
+/**********************************************************************/
+
+Level 5: Submodules 
 
 
 
