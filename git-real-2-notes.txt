@@ -6,3 +6,108 @@ Interactive Rebase
 // alter commits in the same branch:
 git rebase -i HEAD~3 // interactive rebase going back 3 levels 
 
+// reorder commits 
+git log --oneline
+
+$ git rebase -i head~3
+Successfully rebased and updated refs/heads/admin.
+
+david@DESKTOP-U1APQB8 MINGW32 /d/Projects/codeSchool/GIT/store (admin)
+$ git status
+On branch admin
+Your branch is ahead of 'origin/admin' by 2 commits.
+  (use "git push" to publish your local commits)
+nothing to commit, working directory clean
+
+david@DESKTOP-U1APQB8 MINGW32 /d/Projects/codeSchool/GIT/store (admin)
+$ git log --oneline
+c012e11 end of the GIT 1 course
+5b67fde ..
+0396949 .
+11be2a5 create cat txt file
+0f3ca01 .
+113f042 amend commit...
+f08d3f5 add license and readme mod
+cfd4b15 Initial commit
+
+
+// How to change commit messages
+
+david@DESKTOP-U1APQB8 MINGW32 /d/Projects/codeSchool/GIT/store (admin)
+$ git rebase -i head~3
+[detached HEAD 1e42634] changing commit message using rebase interactive reword!!
+ Date: Mon Oct 24 13:50:11 2016 -1000
+ 1 file changed, 8 insertions(+)
+ create mode 100644 git-real-2-notes.txt
+Successfully rebased and updated refs/heads/admin.
+
+david@DESKTOP-U1APQB8 MINGW32 /d/Projects/codeSchool/GIT/store (admin)
+$ git log --oneline
+99a502e commit before rebasing 2
+3fe023c end of the GIT 1 course
+1e42634 changing commit message using rebase interactive reword!!
+0396949 .
+11be2a5 create cat txt file
+0f3ca01 .
+113f042 amend commit...
+f08d3f5 add license and readme mod
+cfd4b15 Initial commit
+
+
+// how to split commits 
+
+david@DESKTOP-U1APQB8 MINGW32 /d/Projects/codeSchool/GIT/store (admin)
+$ git status
+On branch admin
+Your branch is ahead of 'origin/admin' by 3 commits.
+  (use "git push" to publish your local commits)
+nothing to commit, working directory clean
+
+david@DESKTOP-U1APQB8 MINGW32 /d/Projects/codeSchool/GIT/store (admin)
+$ clear
+
+david@DESKTOP-U1APQB8 MINGW32 /d/Projects/codeSchool/GIT/store (admin)
+$ git rebase -i head~3
+Stopped at 3fe023ca231d5808267727110f7e04a16569acd5... end of the GIT 1 course
+You can amend the commit now, with
+
+        git commit --amend
+
+Once you are satisfied with your changes, run
+
+        git rebase --continue
+
+
+david@DESKTOP-U1APQB8 MINGW32 /d/Projects/codeSchool/GIT/store (admin|REBASE-i 2/3)
+$ git reset head^
+Unstaged changes after reset:
+M       notes.txt
+
+david@DESKTOP-U1APQB8 MINGW32 /d/Projects/codeSchool/GIT/store (admin|REBASE-i 2/3)
+$ git status
+interactive rebase in progress; onto 0396949
+Last commands done (2 commands done):
+   pick 1e42634 changing commit message using rebase interactive reword!!
+   edit 3fe023c end of the GIT 1 course
+Next command to do (1 remaining command):
+   pick 99a502e commit before rebasing 2
+  (use "git rebase --edit-todo" to view and edit)
+You are currently splitting a commit while rebasing branch 'admin' on '0396949'.
+  (Once your working directory is clean, run "git rebase --continue")
+
+
+david@DESKTOP-U1APQB8 MINGW32 /d/Projects/codeSchool/GIT/store (admin|REBASE-i 2/3)
+$ git rebase --continue
+Successfully rebased and updated refs/heads/admin.
+
+david@DESKTOP-U1APQB8 MINGW32 /d/Projects/codeSchool/GIT/store (admin)
+$ git log --oneline
+a88468c commit before rebasing 2
+fb9b2a3 edited commit message!
+1e42634 changing commit message using rebase interactive reword!!
+0396949 .
+11be2a5 create cat txt file
+0f3ca01 .
+113f042 amend commit...
+f08d3f5 add license and readme mod
+cfd4b15 Initial commit
