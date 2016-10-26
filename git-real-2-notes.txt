@@ -289,6 +289,117 @@ git log // now it will show the cherry picker in the author/email data for the c
 
 Level 5: Submodules 
 
+Submodules are git repos inside another git repo!
+Used to share libraries across multiple projects 
+
+Submodules can live on github and can be accessed by:
+git submodule add git@example.com:css.git 
+
+Running: git status
+afterwards will show that a new file, .gitmodules was created 
+
+Then: 
+git commit -m "added submodule for css" 
+git push 
+
+How to add the submodule to project:
+cd css 
+git checkout master 
+
+git status 
+git commit -am "add css module to project"
+git push 
+
+How to initialize submodules when pulling down new project w/ Submodules included:
+git clone site@github.com:whatever 
+
+// css and js directories are empty but .gitmodules file does exist 
+
+git submodule init 
+
+Git goes through the .gitmodules file and addds an entry to config for each submodule.
+.git/config 
+
+Then run:
+git submodule update 
+
+This goes out to internet and pulls down the submodule directories into our project 
+
+// Pull Submodules 
+
+git pull 
+
+If a new pull indicates the submodule has been updated (git diff) run:
+git submodule update 
+again to pull down the updates 
+
+Afterwards the update submodule(s) will not be associated with ANY branch. 
+git branch 
+//shows we're on *no branch
+
+To remedy:
+git checkout master 
+
+git merge b6bb883
+which is merging the sha for the specific commit 
+
+git push 
+
+cd /
+git status (new commits)
+git commit -am "committing new submodules finally!)
+
+In other words, submodules have to be pushed twice.
+
+In case you may forget to do this, run:
+git push --recurse-submodules=check 
+
+To push all repos with submodules 
+git push --recurse-submodules=on-demand
+
+// Make a shortcut alias!
+git config alias.pushall "push --recurse-submodules=on-demand"
+
+git pushall 
+
+
+/*********************************************************/
+Level 6: Reflog
+
+If one rolls back to a prior commit, ones after will disappear / delete.
+Actually they're not deleted. They are available via:
+git reflog 
+
+Find the SHA hash for the commit you want to get back 
+
+git reset --hard 1e62 //sha hash id 
+
+or 
+
+git reset --hard HEAD@{2}
+
+// Reflogs are only available locally. If someone clones your repo, they will not be able to see your reflog contents.
+
+// If a branch id deleted (git branch -D branchName )
+Commits aren't deleted even though the branch was. 
+
+// more details 
+git log --walk-reflogs 
+
+// create a new branch and pull in the last commit by referencing the sha hash;
+git branch aviary 28a7
+or 
+git branch aviary HEAD@{1}
+
+//checkout new branch
+git checkout aviary 
+
+git log --oneline // shows the commit is back and on the new branch 
+
+
+
+
+
 
 
 
